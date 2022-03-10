@@ -1,5 +1,7 @@
+use indicatif::{ProgressBar, ProgressStyle};
 use image as img;
 
+use std::time::Duration;
 use std::vec::Vec;
 use std::env;
 
@@ -19,6 +21,35 @@ fn create_image_from_modifier(modifier: String, input: img::DynamicImage) -> img
 }
 
 
+/// Creates a visual progress indicator within the command line to visually show the tool has not crashed.
+#[inline]
+fn create_progress_indicator(message: String) -> ProgressBar {
+    let bar = ProgressBar::new_spinner();
+    bar.enable_steady_tick(Duration::from_millis(100).as_millis() as _);
+    bar.set_message(message);
+    bar.set_style(
+        ProgressStyle::default_spinner()
+            .template("{spinner:.bold.yellow} {msg:.yellow}")
+            .tick_strings(&[
+                "▏",
+                "▎",
+                "▍",
+                "▌",
+                "▋",
+                "▊",
+                "▉",
+                "▊",
+                "▋",
+                "▌",
+                "▍",
+                "▎"
+            ])
+    );
+    
+    return bar;
+}
+
+
 fn main() {
     // Format for the envrionment arguments should be ( [MODIFIER] [INPUT_IMAGE_PATH] [OUTPUT_IMAGE_PATH] ).
     let args: Vec<String> = env::args().collect();
@@ -29,16 +60,24 @@ fn main() {
     );
 
     // Retrieve the environment arguments.
-    let modifier = args[1].clone();
-    let input_path = args[2].clone();
-    let output_path = args[3].clone();
+    let modifier = args[1].clone(); // The modifier used on the input image.
+    let input_path = args[2].clone(); // The path of the input image.
+    let output_path = args[3].clone(); // The path where the modified input image should be saved.
 
     // Attempt to open the Image from the specified `input_path`.
     let input_image = img::open(input_path.clone())
         .expect(format!("Cannot open an Image from path {:?}.", input_path).as_str());
     
+    let progress_indicator = create_progress_indicator(
+        format!("Processing Modification {:?}...", modifier)
+    );
+    
     // Attempt to modify the Image and save it's modified version to the `output_path`.
     let output_image = create_image_from_modifier(modifier, input_image);
     output_image.save(output_path.clone())
         .expect(format!("Failed to save Image to path {:?}.", output_path).as_str());
+    
+    // Finish with a completion message.
+    progress_indicator.set_style( ProgressStyle::default_spinner().template("{msg:.bold.green}") );
+    progress_indicator.finish_with_message("▉ Finished modifying the Image.");
 }
