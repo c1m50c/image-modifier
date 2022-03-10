@@ -16,6 +16,8 @@ fn create_image_from_modifier(modifier: String, input: img::DynamicImage) -> img
         "red" | "r" => modifiers::red(input),
         "green" | "g" => modifiers::green(input),
         "blue" | "b" => modifiers::blue(input),
+        "alpha" | "a" => modifiers::alpha(input),
+        "blur" => modifiers::blur(input),
         
         s => panic!(
             "Modifier {:?} is invalid and does not exist.", s
@@ -72,7 +74,7 @@ fn main() {
         .expect(format!("Cannot open an Image from path {:?}.", input_path).as_str());
     
     let progress_indicator = create_progress_indicator(
-        format!("Processing Modification {:?}...", modifier)
+        format!("Processing Modification {:?} on {:?}...", modifier, input_path)
     );
     
     // Attempt to modify the Image and save it's modified version to the `output_path`.
@@ -82,5 +84,5 @@ fn main() {
     
     // Finish with a completion message.
     progress_indicator.set_style( ProgressStyle::default_spinner().template("{msg:.bold.green}") );
-    progress_indicator.finish_with_message("▉ Finished modifying the Image.");
+    progress_indicator.finish_with_message(format!("▉ Finished modifying the Image, saved to {:?}.", output_path));
 }

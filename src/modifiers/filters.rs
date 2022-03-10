@@ -1,4 +1,5 @@
 use image::{DynamicImage, GenericImageView};
+use image::{RgbaImage, Rgba};
 use image::{RgbImage, Rgb};
 
 
@@ -17,7 +18,7 @@ pub fn invert(input: DynamicImage) -> DynamicImage {
 }
 
 
-/// Excludes all colors within the `input` besides the red channel.
+/// Isolates the red channel with the `input`.
 #[inline]
 pub fn red(input: DynamicImage) -> DynamicImage {
     let (width, height) = input.dimensions();
@@ -34,7 +35,7 @@ pub fn red(input: DynamicImage) -> DynamicImage {
 }
 
 
-/// Excludes all colors within the `input` besides the green channel.
+/// Isolates the green channel with the `input`.
 #[inline]
 pub fn green(input: DynamicImage) -> DynamicImage {
     let (width, height) = input.dimensions();
@@ -51,7 +52,7 @@ pub fn green(input: DynamicImage) -> DynamicImage {
 }
 
 
-/// Excludes all colors within the `input` besides the blue channel.
+/// Isolates the blue channel with the `input`.
 #[inline]
 pub fn blue(input: DynamicImage) -> DynamicImage {
     let (width, height) = input.dimensions();
@@ -65,4 +66,29 @@ pub fn blue(input: DynamicImage) -> DynamicImage {
     }
 
     return DynamicImage::ImageRgb8(output);
+}
+
+
+/// Converts the value of all color channels to the value of the alpha channel within the `input`.
+#[inline]
+pub fn alpha(input: DynamicImage) -> DynamicImage {
+    let (width, height) = input.dimensions();
+    let mut output = RgbaImage::new(width, height);
+
+    for x in 0 .. width {
+        for y in 0 .. height {
+            let alpha_value = input.get_pixel(x, y).0[3];
+            output.put_pixel(x, y, Rgba([alpha_value, alpha_value, alpha_value, 255]));
+        }
+    }
+
+    return DynamicImage::ImageRgba8(output);
+}
+
+
+/// Blurs the `input` image.
+// TODO: Add an additional envrionment argument to control filter values.
+#[inline]
+pub fn blur(input: DynamicImage) -> DynamicImage {
+    return input.blur(16.0);
 }
