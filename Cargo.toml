@@ -1,8 +1,8 @@
 [package]
 name = "imgmod"
-version = "1.2.0"
+version = "1.2.1"
 edition = "2021"
-description = "Command line tool to simply modify image files."
+description = "Command line tool to simply modify image files with various filters."
 readme = "README.MD"
 license = "MIT"
 license-file = "LICENSE"
