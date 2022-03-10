@@ -11,8 +11,11 @@ mod modifiers;
 /// Creates a `DynamicImage` from a modified version of the `input`.
 fn create_image_from_modifier(modifier: String, input: img::DynamicImage) -> img::DynamicImage {
     return match modifier.to_lowercase().as_str() {
-        "greyscale" | "grayscale" | "gs" | "g" => modifiers::greyscale(input),
+        "greyscale" | "grayscale" | "gs" => modifiers::greyscale(input),
         "invert" | "inverse" | "inv" | "i" => modifiers::invert(input),
+        "red" | "r" => modifiers::red(input),
+        "green" | "g" => modifiers::green(input),
+        "blue" | "b" => modifiers::blue(input),
         
         s => panic!(
             "Modifier {:?} is invalid and does not exist.", s
