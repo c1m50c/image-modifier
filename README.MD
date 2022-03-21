@@ -1,4 +1,5 @@
 # **image-modifier**
+
 ![Build Status](https://img.shields.io/github/workflow/status/c1m50c/image-modifier/Build?style=for-the-badge)
 ![Crates.io Version](https://img.shields.io/crates/v/imgmod?color=orange&style=for-the-badge)
 ![Crates.io License](https://img.shields.io/crates/l/imgmod?style=for-the-badge)

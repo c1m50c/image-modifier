@@ -92,3 +92,54 @@ pub fn alpha(input: DynamicImage) -> DynamicImage {
 pub fn blur(input: DynamicImage) -> DynamicImage {
     return input.blur(16.0);
 }
+
+
+/// Fills all color channels with the value of the red channel.
+#[inline]
+pub fn red_grey(input: DynamicImage) -> DynamicImage {
+    let (width, height) = input.dimensions();
+    let mut output = RgbImage::new(width, height);
+
+    for x in 0 .. width {
+        for y in 0 .. height {
+            let red_value = input.get_pixel(x, y).0[0];
+            output.put_pixel(x, y, Rgb([ red_value, red_value, red_value ]));
+        }
+    }
+
+    return DynamicImage::ImageRgb8(output);
+}
+
+
+/// Fills all color channels with the value of the green channel.
+#[inline]
+pub fn green_grey(input: DynamicImage) -> DynamicImage {
+    let (width, height) = input.dimensions();
+    let mut output = RgbImage::new(width, height);
+
+    for x in 0 .. width {
+        for y in 0 .. height {
+            let green_value = input.get_pixel(x, y).0[1];
+            output.put_pixel(x, y, Rgb([ green_value, green_value, green_value ]));
+        }
+    }
+
+    return DynamicImage::ImageRgb8(output);
+}
+
+
+/// Fills all color channels with the value of the blue channel.
+#[inline]
+pub fn blue_grey(input: DynamicImage) -> DynamicImage {
+    let (width, height) = input.dimensions();
+    let mut output = RgbImage::new(width, height);
+
+    for x in 0 .. width {
+        for y in 0 .. height {
+            let blue_value = input.get_pixel(x, y).0[2];
+            output.put_pixel(x, y, Rgb([ blue_value, blue_value, blue_value ]));
+        }
+    }
+
+    return DynamicImage::ImageRgb8(output);
+}

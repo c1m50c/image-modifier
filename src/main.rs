@@ -18,6 +18,9 @@ fn create_image_from_modifier(modifier: String, input: img::DynamicImage) -> img
         "blue" | "b" => modifiers::blue(input),
         "alpha" | "a" => modifiers::alpha(input),
         "blur" => modifiers::blur(input),
+        "red_grey" | "rg" => modifiers::red_grey(input),
+        "green_grey" | "gg" => modifiers::green_grey(input),
+        "blue_grey" | "bg" => modifiers::blue_grey(input),
         
         s => panic!(
             "Modifier {:?} is invalid and does not exist.", s
@@ -78,8 +81,7 @@ fn main() {
     );
     
     // Attempt to modify the Image and save it's modified version to the `output_path`.
-    let output_image = create_image_from_modifier(modifier, input_image);
-    output_image.save(output_path.clone())
+    create_image_from_modifier(modifier, input_image).save(output_path.clone())
         .expect(format!("Failed to save Image to path {:?}.", output_path).as_str());
     
     // Finish with a completion message.
