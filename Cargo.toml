@@ -16,3 +16,4 @@ repository = "https://github.com/c1m50c/image-modifier"
 [dependencies]
 indicatif = "0.16.2"
 image = "0.24.1"
+rand = "0.8.5"

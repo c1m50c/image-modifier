@@ -21,6 +21,7 @@ fn create_image_from_modifier(modifier: String, input: img::DynamicImage) -> img
         "red_grey" | "rg" => modifiers::red_grey(input),
         "green_grey" | "gg" => modifiers::green_grey(input),
         "blue_grey" | "bg" => modifiers::blue_grey(input),
+        "random" | "rand" | "rng" => modifiers::random(input),
         
         s => panic!(
             "Modifier {:?} is invalid and does not exist.", s

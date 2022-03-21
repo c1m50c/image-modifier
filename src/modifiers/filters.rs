@@ -1,6 +1,7 @@
 use image::{DynamicImage, GenericImageView};
 use image::{RgbaImage, Rgba};
 use image::{RgbImage, Rgb};
+use rand::Rng;
 
 
 /// Returns the `input` as a greyscaled version of its self.
@@ -138,6 +139,28 @@ pub fn blue_grey(input: DynamicImage) -> DynamicImage {
         for y in 0 .. height {
             let blue_value = input.get_pixel(x, y).0[2];
             output.put_pixel(x, y, Rgb([ blue_value, blue_value, blue_value ]));
+        }
+    }
+
+    return DynamicImage::ImageRgb8(output);
+}
+
+
+/// Randomizes each color channel value for every pixel within the `input`.
+#[inline]
+pub fn random(input: DynamicImage) -> DynamicImage {
+    use rand::prelude::thread_rng;
+
+    let (width, height) = input.dimensions();
+    let mut output = RgbImage::new(width, height);
+
+    for x in 0 .. width {
+        for y in 0 .. height {
+            let mut rng = thread_rng();
+
+            output.put_pixel(x, y, Rgb([
+                rng.gen_range(0..=255), rng.gen_range(0..=255), rng.gen_range(0..=255)
+            ]));
         }
     }
 
