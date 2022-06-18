@@ -4,7 +4,6 @@ version = "2.0.0"
 edition = "2021"
 description = "Command line tool to simply modify image files with various filters."
 readme = "README.MD"
-license = "MIT"
 license-file = "LICENSE"
 keywords = [ "cli", "image", "images", "image-modification", "image-manipulation" ]
 categories = [ "command-line-interface", "command-line-utilities" ]

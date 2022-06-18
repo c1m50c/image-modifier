@@ -45,6 +45,11 @@ fn process_filters(filters: Vec<filters::Filters>, mut image: img::DynamicImage)
             Filters::IsolateRed(f) => image = f.apply(image),
             Filters::IsolateGreen(f) => image = f.apply(image),
             Filters::IsolateBlue(f) => image = f.apply(image),
+            Filters::Greyscale(f) => image = f.apply(image),
+            Filters::GreyscaleAvg(f) => image = f.apply(image),
+            Filters::GreyscaleR(f) => image = f.apply(image),
+            Filters::GreyscaleG(f) => image = f.apply(image),
+            Filters::GreyscaleB(f) => image = f.apply(image),
             f => panic!("Attempted to process unknown Filter '{:?}'.", f),
         }
     }

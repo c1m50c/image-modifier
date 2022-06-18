@@ -1,4 +1,4 @@
-use super::filters::{isolate::*, Filters};
+use super::filters::{Filters, isolate::*, grey::*};
 
 use std::collections::{VecDeque, HashMap};
 use std::vec::Vec;
@@ -35,22 +35,52 @@ pub fn retrieve_filters(flags: Flags) -> Vec<Filters> {
     
     for (flag, _parameters) in flags {
         match flag.as_str() {
-            "-isor" => {
+            "-iso_r" => {
                 filters.push(
                     Filters::IsolateRed( IsolateRed{} )
                 );
             },
 
-            "-isog" => {
+            "-iso_g" => {
                 filters.push(
                     Filters::IsolateGreen( IsolateGreen{} )
                 );
             },
 
-            "-isob" => {
+            "-iso_b" => {
                 filters.push(
                     Filters::IsolateBlue( IsolateBlue{} )
                 );
+            },
+
+            "-grey" => {
+                filters.push(
+                    Filters::Greyscale( Greyscale{} )
+                )
+            },
+
+            "-grey_avg" => {
+                filters.push(
+                    Filters::GreyscaleAvg( GreyscaleAvg{} )
+                )
+            },
+
+            "-grey_r" => {
+                filters.push(
+                    Filters::GreyscaleR( GreyscaleR{} )
+                )
+            },
+
+            "-grey_g" => {
+                filters.push(
+                    Filters::GreyscaleG( GreyscaleG{} )
+                )
+            },
+
+            "-grey_b" => {
+                filters.push(
+                    Filters::GreyscaleB( GreyscaleB{} )
+                )
             },
             
             _ => {  }
