@@ -54,7 +54,7 @@ fn isolate_blue(input: DynamicImage) -> DynamicImage {
 
 
 pub fn register_filters() {
-    register_filter(String::from("isolate_red"), isolate_red);
-    register_filter(String::from("isolate_green"), isolate_green);
-    register_filter(String::from("isolate_blue"), isolate_blue);
+    register_filter(String::from("-isolate_red"), isolate_red);
+    register_filter(String::from("-isolate_green"), isolate_green);
+    register_filter(String::from("-isolate_blue"), isolate_blue);
 }

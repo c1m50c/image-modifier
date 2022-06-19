@@ -1,6 +1,8 @@
 use std::collections::{VecDeque, HashMap};
 use std::vec::Vec;
 
+use crate::filters::{Filter, FILTERS};
+
 pub type Flags = HashMap<String, Vec<String>>;
 
 
@@ -26,4 +28,19 @@ pub fn get_flags(mut args: VecDeque<String>) -> Flags {
     }
 
     return flags;
+}
+
+
+pub fn get_filters_from_flags(flags: Flags) -> Vec<Filter> {
+    let mut filters = Vec::new();
+
+    unsafe {
+        for (name, func) in &FILTERS {
+            if let Some(_) = flags.get(name) {
+                filters.push(func.clone());
+            }
+        }
+    }
+
+    return filters;
 }

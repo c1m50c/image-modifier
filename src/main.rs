@@ -48,8 +48,9 @@ fn main() {
         .expect("Expected an Output Path parameter at position 2.");
 
     let flags = flags::get_flags(args.collect());
+    let filters = flags::get_filters_from_flags(flags);
 
-    let input_image = img::open(input_path)
+    let mut input_image = img::open(input_path)
         .unwrap_or_else(|err| {
             panic!("Failed to open image from `input_path`, error {:?}", err)
         });
@@ -58,6 +59,14 @@ fn main() {
         String::from("ProgressIndicator")
     );
 
+    for filter in filters {
+        input_image = filter(input_image);
+    }
+
+    input_image.save(output_path)
+        .unwrap_or_else(|err| {
+            panic!("Failed to save image to `output_path`, error {:?}", err)
+        });
     
     progress_indicator.set_style( ProgressStyle::default_spinner().template("{msg:.bold.green}") );
     progress_indicator.finish_with_message("Finished!");
