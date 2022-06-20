@@ -27,7 +27,7 @@ pub static mut FILTERS: Vec<(String, Filter)> = Vec::new();
 ///     return output;
 /// }
 /// 
-/// fn register_filters() {
+/// pub fn register_filters() {
 ///     register_filter(String::from("isolate_red", isolate_red));
 /// }
 /// ```
@@ -55,7 +55,28 @@ pub fn register_filter(name: String, function: Filter) {
 #[doc(hidden)]
 pub fn register_filters() {
     isolate::register_filters();
+    greyscale::register_filters();
 }
 
 
+pub mod submodule_prelude {
+    pub use super::register_filter;
+
+    pub use image::{GenericImageView, GenericImage};
+    pub use image::DynamicImage;
+    pub use image::Rgba;
+}
+
+
+mod greyscale;
 mod isolate;
+
+/*
+    TODO: Replace `register_filters`
+
+    Replace `register_filters` related functions with an attribute procedural macro.
+
+    # Functionality
+    - This APM should be placed on top of each submodule containing [`Filter`] functions.
+    - This APM reads over the functions within the submodule and adds them to [`FILTERS`] automatically.
+*/

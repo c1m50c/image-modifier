@@ -1,8 +1,4 @@
-use super::register_filter;
-
-use image::{GenericImageView, GenericImage};
-use image::DynamicImage;
-use image::Rgba;
+use super::submodule_prelude::*;
 
 
 fn isolate_red(input: DynamicImage) -> DynamicImage {
@@ -53,8 +49,10 @@ fn isolate_blue(input: DynamicImage) -> DynamicImage {
 }
 
 
+/// Function handling the registration of this submodule's [`Filter`] functions.
+#[doc(hidden)]
 pub fn register_filters() {
-    register_filter(String::from("-isolate_red"), isolate_red);
-    register_filter(String::from("-isolate_green"), isolate_green);
-    register_filter(String::from("-isolate_blue"), isolate_blue);
+    register_filter(String::from("-iso_red"), isolate_red);
+    register_filter(String::from("-iso_green"), isolate_green);
+    register_filter(String::from("-iso_blue"), isolate_blue);
 }
